@@ -1,0 +1,28 @@
+/* Généralités */
+#tal_box {margin: 0; padding: 0;}
+.tal_clear {clear: both;}
+.tal_invisible {display: none;}
+p #skillPoints {font-weight: bold; font-size: 1.1em;}
+
+/* Trees's list */
+.tal_tree {float: left; margin-right: 10px; min-height: 150px; width: 220px;}
+
+/* Skill tree */
+.tal_invisible li {float: left; list-style: none; padding-left: 2px; padding-right: 2px; 
+	height: 42px; margin-bottom: 5px; overflow: hidden;}
+.tal_activeSkills, .tal_passiveSkills {float: left; margin-top: 30px;}
+.tal_activeSkills {width: 150px;}
+.tal_passiveSkills {width: 50px;}
+
+
+
+/* Skill details - Mouseover */
+.tal_stats {display: none; position: absolute; background-image: url('../img/background_skillDetails.jpg'); border: 1px solid #CFB07C; 
+	margin-top: 40px; margin-left: -40px; padding: 5px; font-size: 0.8em; color: #3D3D3D; width: 250px;}
+.tal_sTitle {font-weight: bold; color: #4F3D15;}
+p.statLine {float: left; width: 115px; margin: 0;}
+.statBox {border-top: 1px solid #E8DDCA; margin-top: 10px; padding-top: 5px;}
+.tal_stats h3 {color: #4F3D15; font-size: 1.6em; margin: 0;}
+
+/* Link box */
+#tal_linkBox {clear: both; padding-top: 50px;}
