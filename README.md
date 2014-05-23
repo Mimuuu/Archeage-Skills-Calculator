@@ -9,7 +9,11 @@ The XML file is currently filled with false content. The same image and descript
 
 ### Implement the calculator ###
 It's very easy, all you need to do is include the PHP file like this:
-
 ```php
 require_once 'class/AASkillsCalculator.php';
 ```
+Then you call the **getTree()** method.
+```php
+echo $AASkillsCalculator->getTree();
+```
+After this, you are good to go.
