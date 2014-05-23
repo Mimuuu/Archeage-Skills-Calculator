@@ -10,4 +10,6 @@ The XML file is currently filled with false content. The same image and descript
 ### Implement the calculator ###
 It's very easy, all you need to do is include the PHP file like this:
 
-<code>require_once 'class/AASkillsCalculator.php';</code>
+```php
+require_once 'class/AASkillsCalculator.php';
+```
