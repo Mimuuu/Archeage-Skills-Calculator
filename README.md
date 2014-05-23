@@ -52,7 +52,7 @@ The XML is build that way:
 </root>
 ```
 You probably notice a custom tag:
-* **--b-- / ++b++** : It is render as BOLD in the page.
+* **--b-- / ++b++** : It is rendered as BOLD in the page.
 
 ## Implement the calculator ##
 It's very easy, all you need to do is include the PHP file, the JS file and the CSS file.
