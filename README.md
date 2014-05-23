@@ -4,7 +4,7 @@ Archeage-Skills-Calculator
 A pure php/javascript skill calculator for the game Archeage. Very easy to implement and to use.
 A basic webpage is set up at http://s285114191.onlinehome.fr/AASkillsCalculator/.
 
-The PHP file is used to create the basic setup, the 3 lists, the button and the hidden content. The JS file takes care of every interaction, create the link and also read the - if existed - parameter and display the page accordingly.
+The PHP file is used to create the basic setup, the 3 lists, the button and the hidden content. The JS file takes care of every interaction, create the link and also read the - if existed - URL parameter and display the page accordingly.
 
 Nothing but pure PHP / JS was used in order to use it the easiest way possible, without having to deal with any framework.
 
