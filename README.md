@@ -23,6 +23,35 @@ Everything is in one file so it's easier to implement, however the code inside t
 
 It is also worth mentioning that the **parentNode** / **childNodes** combination has been abused a lot, so changing casually the HTML would most likely break the entire thing.
 
+#### XML file ####
+The XML is build that way:
+```xml
+<?xml version="1.0"?>
+<root>
+	<ecole name="Name1" id="Name1">
+		<active>
+			<skill name="Skill Name" img="img/img.png">
+				<stat name="Name">Value</stat>
+				[...]
+				<stat name="Name">Value</stat>
+				<description>Lorem ipsum dolor sit amet, consectetur --b--adipiscing elit++b++. Phasellus in vehicula tellus, rutrum bibendum leo. Maecenas quis eleifend risus. Vestibulum --b--cursus++b++ leo sed fermentum vulputate..</description>
+			</skill>
+			[...]
+		</active>
+		<passive>
+			<skill name="Skill Name" img="img/img.png" req="2">
+				<stat name="Name">Value</stat>
+				[...]
+				<stat name="Name">Value</stat>
+				<description>Lorem ipsum dolor sit amet, consectetur --b--adipiscing elit++b++. Phasellus in vehicula tellus, rutrum bibendum leo. Maecenas quis eleifend risus. Vestibulum --b--cursus++b++ leo sed fermentum vulputate..</description>
+			</skill>
+			[...]
+		</passive>
+	</ecole>
+	[...]
+</root>
+```
+
 ## Implement the calculator ##
 It's very easy, all you need to do is include the PHP file, the JS file and the CSS file.
 ```php
