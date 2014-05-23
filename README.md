@@ -9,7 +9,7 @@ The XML file is currently filled with false content. The same image and descript
 
 ### Implement the calculator ###
 It's very easy, all you need to do is include the PHP file, the JS file and the CSS file.
-```
+```php
 require_once 'class/AASkillsCalculator.php';
 <link rel="stylesheet" type="text/css" href="css/style_aaSkillsCalculator.css">
 <script type="text/javascript" src="js/aa_skillsCalculator.js"></script>
