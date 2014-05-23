@@ -11,7 +11,7 @@ Nothing but pure PHP / JS was used in order to use it the easiest way possible, 
 ###### What's missing ######
 The XML file is currently filled with false content. The same image and description is used for everything. The XML format is described further.
 
-# Implement the calculator #
+## Implement the calculator ##
 It's very easy, all you need to do is include the PHP file, the JS file and the CSS file.
 ```php
 require_once 'class/AASkillsCalculator.php';
