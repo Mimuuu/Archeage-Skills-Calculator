@@ -7,12 +7,15 @@
 
 class AASkillsCalculator {
 	
-	private $_xml;	// Contenu xml
+	private $_xml;	// XML content
 
-	function AASkillsCalculator ($xml="xml/aa_skillsLists.xml") {
-		// Chargement du XML
-		$this->_xml = new DomDocument();
-		$this->_xml->load($xml);
+	public function AASkillsCalculator ($xml="xml/aa_skillsLists.xml") {
+		// Load XML
+		if (file_exists($xml)) {
+			$this->_xml = simplexml_load_file($xml);
+		} else {
+			exit('Error while loading XML file.');
+		}
 	}
 
 	/*
@@ -42,10 +45,9 @@ class AASkillsCalculator {
 		Return one tree's HTML
 	*/
 	private function createTree() {
-		$tree = $this->_xml->getElementsByTagName('ecole');
-		$html = $this->getSpec($tree);
+		$html = $this->getSpec();
 		$html .= '<div class="tal_clear"></div>';
-		$html .= $this->getSkills($tree);
+		$html .= $this->getSkills();
 
 		return $html;
 	}
@@ -53,12 +55,11 @@ class AASkillsCalculator {
 
 	/*
 		Return the skills's HTML from one tree
-		@tree 	: 	Tree's XML node (ecole)
 	*/
-	private function getSkills($node) {
+	private function getSkills() {
 		$html ='';
-		foreach ($node as $branch) {
-			$html .= '<div id="'.$branch->getAttribute('id').'" class="tal_invisible">';
+		foreach ($this->_xml->ecole as $branch) {
+			$html .= '<div id="'.$branch['id'].'" class="tal_invisible">';
 			$html .= $this->getActive($branch);
 			$html .= $this->getPassive($branch);
 			$html .= '</div>';
@@ -69,14 +70,13 @@ class AASkillsCalculator {
 
 	/*
 		Return the list of the skill trees
-		@node 	:	 Tree's XML node (ecole)
 	*/
-	private function getSpec($node) {
+	private function getSpec() {
 		$html = '<div id="tal_ecoles">';
 		$html .= '<select id="tal_listEcoles" onchange="tal_display(this)">';
 		$html .= '<option value="0" selected="" disabled="">Choose...</option>';
-		foreach ($node as $branch) {
-			$html .= '<option value="'.$branch->getAttribute('id').'">'.$branch->getAttribute('name').'</option>';
+		foreach ($this->_xml->ecole as $branch) {
+			$html .= '<option value="'.$branch['id'].'">'.$branch['name'].'</option>';
 		}
 		$html .= '</select>';
 		$html .= '</div>';
@@ -86,42 +86,34 @@ class AASkillsCalculator {
 
 	/*
 		Return the active skills from one tree
-		@node 	:	Active's XML node (ecole > active)
+		@node 	:	Tree's XML node (ecole)
 	*/
 	private function getActive($node) {
-		$active = $node->getElementsByTagName('active');
-		foreach ($active as $a) {
-			$skill = $a->getElementsByTagName('skill');
-			$html = '<div class="tal_activeSkills">';
-			foreach ($skill as $s) {
-				$html .= '<li onClick="toggleSkill(this)">
-					<img src="'.$s->getAttribute('img').'" onMouseOver="displayStats(this)" onMouseOut="hideStats(this)" />';
-				$html .= '<div class="tal_stats">'.$this->getSkillDetail($s).'</div>';
-				$html .= '</li>';
-			}
-			$html .= '</div>';
+		$html = '<div class="tal_activeSkills">';
+		foreach ($node->active->skill as $s) {
+			$html .= '<li onClick="toggleSkill(this)">
+				<img src="'.$s['img'].'" onMouseOver="displayStats(this)" onMouseOut="hideStats(this)" />';
+			$html .= '<div class="tal_stats">'.$this->getSkillDetail($s).'</div>';
+			$html .= '</li>';
 		}
+		$html .= '</div>';
 
 		return $html;
 	}
 
 	/*
 		Return the active skills from one tree
-		@node 	:	Passive's XML node (ecole > passive)
+		@node 	:	Tree's XML node (ecole)
 	*/
 	private function getPassive($node) {
-		$active = $node->getElementsByTagName('passive');
-		foreach ($active as $a) {
-			$skill = $a->getElementsByTagName('skill');
-			$html ='<div class="tal_passiveSkills">';
-			foreach ($skill as $s) {
-				$html .= '<li class="tal_passive" data-req="'.$s->getAttribute('req').'" onClick="toggleSkill(this)">
-					<img src="'.$s->getAttribute('img').'" onMouseOver="displayStats(this)" onMouseOut="hideStats(this)" />';
-				$html .= '<div class="tal_stats">'.$this->getSkillDetail($s).'</div>';
-				$html .= '</li>';
-			}
-			$html .= '</div>';
+		$html ='<div class="tal_passiveSkills">';
+		foreach ($node->passive->skill as $s) {
+			$html .= '<li class="tal_passive" data-req="'.$s['req'].'" onClick="toggleSkill(this)">
+				<img src="'.$s['img'].'" onMouseOver="displayStats(this)" onMouseOut="hideStats(this)" />';
+			$html .= '<div class="tal_stats">'.$this->getSkillDetail($s).'</div>';
+			$html .= '</li>';
 		}
+		$html .= '</div>';
 
 		return $html;
 	}
@@ -131,15 +123,11 @@ class AASkillsCalculator {
 		@node 	:	Skill's XML node (ecole > passive/active > skill)
 	*/
 	private function getSkillDetail($node) {
-		$html = '<h3>'.$node->getAttribute('name').'</h2>';
-		$stat = $node->getElementsByTagName('stat');
-		$desc = $node->getElementsByTagName('description');
-		foreach ($desc as $d) {
-			$html .= '<p>'.utf8_decode($this->renderTags($d->nodeValue)).'</p>';
-		}
+		$html = '<h3>'.$node['name'].'</h2>';
+		$html .= '<p>'.utf8_decode($this->renderTags($node->description)).'</p>';
 		$html .= '<div class="statBox">';
-		foreach ($stat as $s) {
-			$html .= '<p class="statLine"><span class="tal_sTitle">'.ucfirst(utf8_decode($s->getAttribute('name'))).'</span>: '.utf8_decode($s->nodeValue).'</p>';
+		foreach ($node->stat as $s) {
+			$html .= '<p class="statLine"><span class="tal_sTitle">'.ucfirst(utf8_decode($s['name'])).'</span>: '.utf8_decode($s).'</p>';
 		}
 		$html .= '</div>';
 
