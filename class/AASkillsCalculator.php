@@ -7,7 +7,7 @@
 
 class AASkillsCalculator {
 	
-	var $_xml;	// Contenu xml
+	private $_xml;	// Contenu xml
 
 	function AASkillsCalculator ($xml="xml/aa_skillsLists.xml") {
 		// Chargement du XML
@@ -18,7 +18,7 @@ class AASkillsCalculator {
 	/*
 		Return the calculator's HTML
 	*/
-	function getTree() {
+	public function getTree() {
 		// Affichage de la page
 		$html = '<div id="tal_box">';
 		$html .= '<p>You can still use <span id="skillPoints">23</span> points.</p>';
@@ -41,7 +41,7 @@ class AASkillsCalculator {
 	/*
 		Return one tree's HTML
 	*/
-	function createTree() {
+	private function createTree() {
 		$tree = $this->_xml->getElementsByTagName('ecole');
 		$html = $this->getSpec($tree);
 		$html .= '<div class="tal_clear"></div>';
@@ -55,7 +55,7 @@ class AASkillsCalculator {
 		Return the skills's HTML from one tree
 		@tree 	: 	Tree's XML node (ecole)
 	*/
-	function getSkills($node) {
+	private function getSkills($node) {
 		$html ='';
 		foreach ($node as $branch) {
 			$html .= '<div id="'.$branch->getAttribute('id').'" class="tal_invisible">';
@@ -71,7 +71,7 @@ class AASkillsCalculator {
 		Return the list of the skill trees
 		@node 	:	 Tree's XML node (ecole)
 	*/
-	function getSpec($node) {
+	private function getSpec($node) {
 		$html = '<div id="tal_ecoles">';
 		$html .= '<select id="tal_listEcoles" onchange="tal_display(this)">';
 		$html .= '<option value="0" selected="" disabled="">Choose...</option>';
@@ -88,7 +88,7 @@ class AASkillsCalculator {
 		Return the active skills from one tree
 		@node 	:	Active's XML node (ecole > active)
 	*/
-	function getActive($node) {
+	private function getActive($node) {
 		$active = $node->getElementsByTagName('active');
 		foreach ($active as $a) {
 			$skill = $a->getElementsByTagName('skill');
@@ -109,7 +109,7 @@ class AASkillsCalculator {
 		Return the active skills from one tree
 		@node 	:	Passive's XML node (ecole > passive)
 	*/
-	function getPassive($node) {
+	private function getPassive($node) {
 		$active = $node->getElementsByTagName('passive');
 		foreach ($active as $a) {
 			$skill = $a->getElementsByTagName('skill');
@@ -130,7 +130,7 @@ class AASkillsCalculator {
 		Get the skill details (mana, cooldown, etc)
 		@node 	:	Skill's XML node (ecole > passive/active > skill)
 	*/
-	function getSkillDetail($node) {
+	private function getSkillDetail($node) {
 		$html = '<h3>'.$node->getAttribute('name').'</h2>';
 		$stat = $node->getElementsByTagName('stat');
 		$desc = $node->getElementsByTagName('description');
@@ -153,7 +153,7 @@ class AASkillsCalculator {
 		@Custom tag
 			--b-- / ++b++ 	=> 	<b> / </b>
 	*/
-	function renderTags($str) {
+	private function renderTags($str) {
 		return str_replace(array('--b--', '++b++'), array('<b>', '</b>'), $str);
 	}
 }
